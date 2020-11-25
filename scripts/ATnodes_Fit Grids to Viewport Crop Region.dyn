@@ -54,6 +54,13 @@
       "Type": "boolean",
       "Value": "false",
       "Description": "Selection between a true and false."
+    },
+    {
+      "Id": "f3e91b75fc214e8a981947db438df352",
+      "Name": "Use Active View?",
+      "Type": "boolean",
+      "Value": "true",
+      "Description": "Selection between a true and false."
     }
   ],
   "Outputs": [],
@@ -1817,7 +1824,7 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "PythonScriptNode",
-      "Code": "#ali.tehami@yahoo.com\n#updated on 25/11/2020\n\nimport clr\nimport sys\nsys.path.append('C:\\Program Files (x86)\\IronPython 2.7\\Lib')\nimport System\nfrom System import Array\nfrom System.Collections.Generic import *\nclr.AddReference('ProtoGeometry')\nfrom Autodesk.DesignScript.Geometry import *\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.Elements)\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.AddReference(\"RevitServices\")\nimport RevitServices\nfrom RevitServices.Persistence import DocumentManager \nfrom RevitServices.Transactions import TransactionManager \n\nclr.AddReference(\"RevitAPI\")\nclr.AddReference(\"RevitAPIUI\")\n\nimport Autodesk \nfrom Autodesk.Revit.DB import *\nfrom Autodesk.Revit.UI import *\n\ndoc = DocumentManager.Instance.CurrentDBDocument\nuiapp = DocumentManager.Instance.CurrentUIApplication \napp = uiapp.Application \nuidoc = uiapp.ActiveUIDocument\n\n\n######################################\n\ndef first_Elem(x):\n\tif (type(x) == list):\n\t\treturn UnwrapElement(x[0])\n\telse:\n\t\treturn UnwrapElement(x)\n\nview = doc.GetElement(first_Elem(IN[0]).ViewId)\ncropbox = view.CropBox.ToProtoType()\n\nOUT = view,cropbox\n\n\n",
+      "Code": "#ali.tehami@yahoo.com\n#updated on 25/11/2020\n\nimport clr\nimport sys\nsys.path.append('C:\\Program Files (x86)\\IronPython 2.7\\Lib')\nimport System\nfrom System import Array\nfrom System.Collections.Generic import *\nclr.AddReference('ProtoGeometry')\nfrom Autodesk.DesignScript.Geometry import *\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.Elements)\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.AddReference(\"RevitServices\")\nimport RevitServices\nfrom RevitServices.Persistence import DocumentManager \nfrom RevitServices.Transactions import TransactionManager \n\nclr.AddReference(\"RevitAPI\")\nclr.AddReference(\"RevitAPIUI\")\n\nimport Autodesk \nfrom Autodesk.Revit.DB import *\nfrom Autodesk.Revit.UI import *\n\ndoc = DocumentManager.Instance.CurrentDBDocument\nuiapp = DocumentManager.Instance.CurrentUIApplication \napp = uiapp.Application \nuidoc = uiapp.ActiveUIDocument\n\n\n######################################\n\ndef first_Elem(x):\n\tif (type(x) == list):\n\t\treturn UnwrapElement(x[0])\n\telse:\n\t\treturn UnwrapElement(x)\n\n\n\nif (IN[1]):\n\tview = uidoc.ActiveView\n\nelse:\n\tview = doc.GetElement(first_Elem(IN[0]).ViewId)\n\ncropbox = view.CropBox.ToProtoType()\n\nOUT = view,cropbox\n\n\n",
       "VariableInputPorts": true,
       "Id": "9e5bacafeb1a4ab7b1e8a847402eb307",
       "Inputs": [
@@ -1825,6 +1832,15 @@
           "Id": "6bf3b6475ab847f48551ff35c2a4eb99",
           "Name": "IN[0]",
           "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0ff7107113914d489242ff920e7ffe07",
+          "Name": "IN[1]",
+          "Description": "Input #1",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1942,6 +1958,26 @@
       "Outputs": [
         {
           "Id": "b26361227b4745f49b902944a569d7ab",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "f3e91b75fc214e8a981947db438df352",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "abf17f2a32494882afce1c944a07fdc6",
           "Name": "",
           "Description": "Boolean",
           "UsingDefaultValue": false,
@@ -2113,17 +2149,12 @@
     {
       "Start": "c320d1e3376f425696c869c01f393441",
       "End": "6bf3b6475ab847f48551ff35c2a4eb99",
-      "Id": "9e7411961b294a3cbcb1cca3dbd98452"
+      "Id": "7e049430ad994093845219095b446759"
     },
     {
       "Start": "ae9e5876a02d42948a3d006f8d107c58",
       "End": "174de275796044b68451d7a72dc16c25",
       "Id": "00c113319757468c82200a17bdec183e"
-    },
-    {
-      "Start": "ac6f21b33576421984f174f0dd7ac3ff",
-      "End": "5235c203c28a47dcb2232cab41beeac8",
-      "Id": "697ffee222d241e28937b47b83e4f1e4"
     },
     {
       "Start": "48bae8c9c69f47ec96ec79e001fbd4e7",
@@ -2301,6 +2332,11 @@
       "Id": "e557dd4c9fe64085a0e37a041c279f0c"
     },
     {
+      "Start": "f18faf0ca3c84d708b2bfab44010045d",
+      "End": "5235c203c28a47dcb2232cab41beeac8",
+      "Id": "7ee5851abc1d4aa38b84b09b9d926074"
+    },
+    {
       "Start": "053550cec06f4716bdfaf888217fd08d",
       "End": "f93510894a554f3e9a4ef737ad51a9ef",
       "Id": "5eb0e491bca247ec9b1b7b49d5390656"
@@ -2314,6 +2350,11 @@
       "Start": "b26361227b4745f49b902944a569d7ab",
       "End": "31b8ef384d434eb9a67889c1b349ec1e",
       "Id": "b67fc15f57c04e7d8569fe2dbb31eada"
+    },
+    {
+      "Start": "abf17f2a32494882afce1c944a07fdc6",
+      "End": "0ff7107113914d489242ff920e7ffe07",
+      "Id": "6a05fdc583584759b624e5e28103fd9a"
     }
   ],
   "Dependencies": [
@@ -2614,13 +2655,13 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "Select Viewport",
+        "Name": "Select Viewport (Only works when \"Use Active View?\" option is disabled)",
         "Id": "3e4ac9eee9fa48e5b4acdbab075df658",
         "IsSetAsInput": true,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -2287.7075033989154,
-        "Y": 77.8990260524256
+        "X": -2560.2338715091228,
+        "Y": 63.299399189378732
       },
       {
         "ShowGeometry": true,
@@ -2849,8 +2890,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -2071.0923504276725,
-        "Y": 77.609758919192927
+        "X": -2037.0265544138963,
+        "Y": 118.9753683644924
       },
       {
         "ShowGeometry": true,
@@ -2881,6 +2922,16 @@
         "Excluded": false,
         "X": 6568.0298211474865,
         "Y": -91.194147252277617
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Use Active View?",
+        "Id": "f3e91b75fc214e8a981947db438df352",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -2240.4990867470365,
+        "Y": 200.72591559348962
       }
     ],
     "Annotations": [
@@ -2927,9 +2978,9 @@
           "ca18761cd2e24fa1b0cb27326daffa96",
           "b08e5c720e254e61bec7cb4455d53c8a"
         ],
-        "Left": -2297.7075033989154,
+        "Left": -2570.2338715091228,
         "Top": -376.77121155387772,
-        "Width": 2836.672401118215,
+        "Width": 3243.6596021695386,
         "Height": 693.10686929271753,
         "FontSize": 36.0,
         "InitialTop": -323.77121155387772,
@@ -3069,8 +3120,8 @@
         "Id": "00c05e7f278640508474d78874b31396",
         "Title": "to be added to future \"@nodes\"  package",
         "Nodes": [],
-        "Left": -2059.2048879088088,
-        "Top": 37.926087828239247,
+        "Left": -2060.4215234807289,
+        "Top": 69.5586126981741,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -3094,8 +3145,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": -3667.3183859552128,
-    "Y": 704.59194531440312,
-    "Zoom": 0.67005183508124255
+    "X": 2300.5531638699358,
+    "Y": 451.01557884204766,
+    "Zoom": 0.82193881477705644
   }
 }
